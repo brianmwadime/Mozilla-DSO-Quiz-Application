@@ -6,10 +6,12 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mozilla.hackathon.kiboko.R;
 import com.mozilla.hackathon.kiboko.adapters.TopicsAdapter;
@@ -80,24 +82,37 @@ public class TopicsFragment extends Fragment {
         adapter = new TopicsAdapter(this.getActivity(), getTopics());
         lv.setAdapter(adapter);
 
+        // React to user clicks on item
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> parentAdapter, View view, int position,
+                                    long id) {
+
+
+                // We know the View is a <extView so we can cast it
+//                TextView clickedView = (TextView) view;
+
+//                Toast.makeText(getContext(), "Item with id ["+id+"] - Position ["+position+"] - Planet ["+clickedView.getText()+"]", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
         inputSearch.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
                 // When user changed the Text
-//                TopicsFragment.this.adapter.getFilter().filter(cs);
+                TopicsFragment.this.adapter.getFilter().filter(cs);
             }
 
             @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-                                          int arg3) {
-                // TODO Auto-generated method stub
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
 
             }
 
             @Override
             public void afterTextChanged(Editable arg0) {
-                // TODO Auto-generated method stub
+
             }
         });
     }

@@ -9,68 +9,147 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.widget.Filter;
+import android.widget.Filterable;
 import com.mozilla.hackathon.kiboko.R;
 import com.mozilla.hackathon.kiboko.models.Topic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Brian Mwadime on 01/06/2016.
  */
-public class TopicsAdapter  extends BaseAdapter {
+public class TopicsAdapter  extends BaseAdapter implements Filterable {
     List<Topic> topics;
-    Context context;
-    private static LayoutInflater inflater=null;
-    public TopicsAdapter(Activity activity, List<Topic> topics) {
-        // TODO Auto-generated constructor stub
+    private Context context;
+    private Filter planetFilter;
+    private List<Topic> origTopicList;
+
+    public TopicsAdapter(Context ctx, List<Topic> topics) {
         this.topics = topics;
-        this.context = activity;
-        inflater = ( LayoutInflater )context.
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.context = ctx;
+        this.origTopicList = topics;
     }
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
         return topics.size();
     }
 
     @Override
-    public Object getItem(int position) {
-        // TODO Auto-generated method stub
+    public Topic getItem(int position) {
         return topics.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
-        return position;
+        return topics.get(position).hashCode();
     }
 
-    public class Holder
+    /* *********************************
+	 * We use the holder pattern
+	 * It makes the view faster and avoid finding the component
+	 * **********************************/
+
+    private static class Holder
     {
         TextView tv;
         ImageView img;
     }
 
+    public void resetData() {
+        topics = origTopicList;
+    }
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
-        Holder holder=new Holder();
-        View rowView;
-        rowView = inflater.inflate(R.layout.topic_item, null);
-        holder.tv=(TextView) rowView.findViewById(R.id.topic_name);
-        holder.img=(ImageView) rowView.findViewById(R.id.topic_icon);
-        holder.tv.setText(topics.get(position).getName());
-        holder.img.setImageURI(Uri.parse(topics.get(position).getImage()));
-        rowView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-//                Toast.makeText(context, "You Clicked "+result[position], Toast.LENGTH_LONG).show();
+        View v = convertView;
+
+        Holder holder = new Holder();
+
+        // First let's verify the convertView is not null
+        if (convertView == null) {
+            // This a new view we inflate the new layout
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            v = inflater.inflate(R.layout.topic_item, null);
+            // Now we can fill the layout with the right values
+            TextView nameView = (TextView) v.findViewById(R.id.topic_name);
+            ImageView imageView = (ImageView) v.findViewById(R.id.topic_icon);
+
+
+            holder.tv = nameView;
+            holder.img = imageView;
+
+            v.setTag(holder);
+        }
+        else
+            holder = (Holder) v.getTag();
+
+        Topic topic = topics.get(position);
+        holder.tv.setText(topic.getName());
+        holder.img.setImageURI(Uri.parse(topic.getImage()));
+
+
+        return v;
+    }
+
+    /*
+	 * We create our filter
+	 */
+
+    @Override
+    public Filter getFilter() {
+        if (planetFilter == null)
+            planetFilter = new TopicsFilter();
+
+        return planetFilter;
+    }
+
+
+
+    private class TopicsFilter extends Filter {
+
+
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults results = new FilterResults();
+            // We implement here the filter logic
+            if (constraint == null || constraint.length() == 0) {
+                // No filter implemented we return all the list
+                results.values = origTopicList;
+                results.count = origTopicList.size();
             }
-        });
-        return rowView;
+            else {
+                // We perform filtering operation
+                List<Topic> nPlanetList = new ArrayList<Topic>();
+
+                for (Topic topic : topics) {
+                    if (topic.getName().toUpperCase().startsWith(constraint.toString().toUpperCase()))
+                        nPlanetList.add(topic);
+                }
+
+                results.values = nPlanetList;
+                results.count = nPlanetList.size();
+
+            }
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint,
+                                      FilterResults results) {
+
+            // Now we have to inform the adapter about the new list filtered
+            if (results.count == 0)
+                notifyDataSetInvalidated();
+            else {
+                topics = (List<Topic>) results.values;
+                notifyDataSetChanged();
+            }
+
+        }
+
     }
 
 }
