@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.Toast;
+
 import com.mozilla.hackathon.kiboko.R;
 import com.mozilla.hackathon.kiboko.models.Topic;
 
@@ -63,7 +65,7 @@ public class TopicsAdapter  extends BaseAdapter implements Filterable {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        View v = convertView;
+        View viewItem = convertView;
 
         Holder holder = new Holder();
 
@@ -71,26 +73,35 @@ public class TopicsAdapter  extends BaseAdapter implements Filterable {
         if (convertView == null) {
             // This a new view we inflate the new layout
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = inflater.inflate(R.layout.topic_item, null);
+            viewItem = inflater.inflate(R.layout.dashboard_grid_item, null);
             // Now we can fill the layout with the right values
-            TextView nameView = (TextView) v.findViewById(R.id.topic_name);
-            ImageView imageView = (ImageView) v.findViewById(R.id.topic_icon);
+            TextView nameView = (TextView) viewItem.findViewById(R.id.dashboard_text);
+            ImageView imageView = (ImageView) viewItem.findViewById(R.id.dashboard_icon);
 
 
             holder.tv = nameView;
             holder.img = imageView;
 
-            v.setTag(holder);
+            viewItem.setTag(holder);
         }
         else
-            holder = (Holder) v.getTag();
+            holder = (Holder) viewItem.getTag();
 
-        Topic topic = topics.get(position);
+        final Topic topic = topics.get(position);
         holder.tv.setText(topic.getName());
-        holder.img.setImageURI(Uri.parse(topic.getImage()));
+        holder.img.setImageResource(topic.getImage());
+
+        viewItem.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Toast.makeText(context, "You Clicked "+ topic.getName(), Toast.LENGTH_LONG).show();
+            }
+        });
 
 
-        return v;
+        return viewItem;
     }
 
     /*

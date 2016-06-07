@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +25,7 @@ import java.util.List;
 
 public class TopicsFragment extends Fragment {
     // List view
-    private ListView lv;
+    private GridView gridView;
 
     // Listview Adapter
     TopicsAdapter adapter;
@@ -52,7 +53,7 @@ public class TopicsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_topics_layout, container, false);
 
-        lv = (ListView) rootView.findViewById(R.id.topics_list);
+        gridView = (GridView) rootView.findViewById(R.id.dashboardGridView);
 
         inputSearch = (EditText) rootView.findViewById(R.id.inputSearch);
 
@@ -62,15 +63,15 @@ public class TopicsFragment extends Fragment {
 
     private List<Topic> getTopics() {
         List<Topic> list = new ArrayList<Topic>();
-        list.add(get("Wifi", "Wifi"));
-        list.add(get("Using your alarm", "Wifi"));
-        list.add(get("Calendar Setup", "Wifi"));
-        list.add(get("Navigation", "Wifi"));
+        list.add(get("Connectivity", R.drawable.ic_wifi_tethering_black_48dp));
+        list.add(get("Phone Usage", R.drawable.ic_phone_black_48dp));
+        list.add(get("Apps", R.drawable.ic_get_app_black_48dp));
+        list.add(get("Accounts", R.drawable.ic_account_box_black_48dp));
 
         return list;
     }
 
-    private Topic get(String s, String i) {
+    private Topic get(String s, int i) {
         return new Topic(s, i);
     }
 
@@ -80,10 +81,10 @@ public class TopicsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         adapter = new TopicsAdapter(this.getActivity(), getTopics());
-        lv.setAdapter(adapter);
+        gridView.setAdapter(adapter);
 
         // React to user clicks on item
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parentAdapter, View view, int position,
                                     long id) {

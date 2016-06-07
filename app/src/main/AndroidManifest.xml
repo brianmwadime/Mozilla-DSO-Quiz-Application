@@ -2,9 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mozilla.hackathon.kiboko" >
 
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name="com.mozilla.hackathon.kiboko.App"
         android:theme="@style/AppTheme"
         android:allowBackup="true"
 
@@ -20,13 +22,22 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activities.DashboardActivity"
+            android:label="@string/title_activity_dashboard" >
+
+        </activity>
+        <activity
             android:name=".activities.DetailsActivity"
             android:label="@string/title_activity_details" >
+
         </activity>
         <activity
             android:name=".activities.SelectActionActivity"
             android:label="@string/title_activity_select_action" >
         </activity>
+
+        <service android:name="com.mozilla.hackathon.kiboko.services.ChatHeadService" >
+        </service>
     </application>
 
 </manifest>

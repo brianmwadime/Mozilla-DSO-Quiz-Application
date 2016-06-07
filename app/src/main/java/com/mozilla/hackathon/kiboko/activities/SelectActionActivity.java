@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.mozilla.hackathon.kiboko.R;
 import com.mozilla.hackathon.kiboko.adapters.ListAdapter;
-import com.mozilla.hackathon.kiboko.utils.Constants;
-import com.mozilla.hackathon.kiboko.utils.Helpers;
+import com.mozilla.hackathon.kiboko.utilities.Constants;
+import com.mozilla.hackathon.kiboko.utilities.Helpers;
 
 public class SelectActionActivity extends ActionBarActivity {
 
