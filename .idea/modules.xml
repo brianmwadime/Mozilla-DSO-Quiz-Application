@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Mozilla-DSO-Quiz-Application.iml" filepath="$PROJECT_DIR$/Mozilla-DSO-Quiz-Application.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jisort.iml" filepath="$PROJECT_DIR$/jisort.iml" />
     </modules>
   </component>
 </project>
