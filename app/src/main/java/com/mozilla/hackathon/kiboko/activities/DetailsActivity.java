@@ -1,5 +1,6 @@
 package com.mozilla.hackathon.kiboko.activities;
 
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,7 +9,7 @@ import android.webkit.WebView;
 
 import com.mozilla.hackathon.kiboko.R;
 
-public class DetailsActivity extends ActionBarActivity {
+public class DetailsActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

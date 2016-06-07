@@ -3,9 +3,9 @@ package com.mozilla.hackathon.kiboko.models;
 public class Topic {
 
     private String name;
-    private String image;
+    private int image;
 
-    public Topic(String name, String image) {
+    public Topic(String name, int image) {
         this.name = name;
         this.image = image;
     }
@@ -18,11 +18,11 @@ public class Topic {
         this.name = name;
     }
 
-    public String getImage() {
+    public int getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(int image) {
         this.image = image;
     }
 

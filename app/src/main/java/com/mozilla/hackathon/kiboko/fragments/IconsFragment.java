@@ -2,16 +2,34 @@ package com.mozilla.hackathon.kiboko.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mozilla.hackathon.kiboko.R;
+import com.mozilla.hackathon.kiboko.adapters.TopicsAdapter;
+import com.mozilla.hackathon.kiboko.models.Topic;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class IconsFragment extends Fragment {
-    private static final String ARG_PAGE_NUMBER = "page_number";
+    private GridView gridView;
+
+    // Listview Adapter
+    TopicsAdapter adapter;
+
+    // Search EditText
+    Button view_icons;
 
     public IconsFragment() {
     }
@@ -19,7 +37,7 @@ public class IconsFragment extends Fragment {
     public static IconsFragment newInstance() {
         IconsFragment fragment = new IconsFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_PAGE_NUMBER, 2);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -29,10 +47,55 @@ public class IconsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_icons_layout, container, false);
 
-        TextView txt = (TextView) rootView.findViewById(R.id.page_number_label);
-        int page = getArguments().getInt(ARG_PAGE_NUMBER, -1);
-        txt.setText(String.format("Page %d", page));
+        gridView = (GridView) rootView.findViewById(R.id.icons_gridview);
+
+        view_icons = (Button) rootView.findViewById(R.id.icons_button);
+
 
         return rootView;
     }
+
+    private List<Topic> getTopics() {
+        List<Topic> list = new ArrayList<Topic>();
+        list.add(get("wifi", R.drawable.ic_wifi_tethering_black_48dp));
+        list.add(get("phone", R.drawable.ic_phone_black_48dp));
+        list.add(get("app", R.drawable.ic_get_app_black_48dp));
+        list.add(get("account", R.drawable.ic_account_box_black_48dp));
+        list.add(get("calendar", R.drawable.ic_perm_contact_calendar_black_48dp));
+        list.add(get("alarm", R.drawable.ic_alarm_black_48dp));
+        list.add(get("settings", R.drawable.ic_settings_applications_black_48dp));
+        list.add(get("search", R.drawable.ic_search_black_48dp));
+
+        return list;
+    }
+
+    private Topic get(String s, int i) {
+        return new Topic(s, i);
+    }
+
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        adapter = new TopicsAdapter(this.getActivity(), getTopics());
+        gridView.setAdapter(adapter);
+
+        // React to user clicks on item
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> parentAdapter, View view, int position,
+                                    long id) {
+
+
+                // We know the View is a <extView so we can cast it
+//                TextView clickedView = (TextView) view;
+
+                Toast.makeText(getContext(), position, Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+    }
+
 }
