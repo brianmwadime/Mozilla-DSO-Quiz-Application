@@ -2,20 +2,16 @@ package com.mozilla.hackathon.kiboko.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mozilla.hackathon.kiboko.R;
-import com.mozilla.hackathon.kiboko.adapters.TopicsAdapter;
+import com.mozilla.hackathon.kiboko.adapters.IconsAdapter;
 import com.mozilla.hackathon.kiboko.models.Topic;
 
 import java.util.ArrayList;
@@ -26,7 +22,7 @@ public class IconsFragment extends Fragment {
     private GridView gridView;
 
     // Listview Adapter
-    TopicsAdapter adapter;
+    IconsAdapter adapter;
 
     // Search EditText
     Button view_icons;
@@ -78,7 +74,7 @@ public class IconsFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        adapter = new TopicsAdapter(this.getActivity(), getTopics());
+        adapter = new IconsAdapter(this.getActivity(), getTopics());
         gridView.setAdapter(adapter);
 
         // React to user clicks on item

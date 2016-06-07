@@ -25,5 +25,9 @@ public class DashboardActivity extends FragmentActivity {
         startActivity(dashboardIntent);
     }
 
+    public void screenshotsClicked(View view){
+
+    }
+
 
 }

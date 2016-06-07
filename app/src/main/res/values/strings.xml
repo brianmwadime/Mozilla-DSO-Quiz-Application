@@ -13,5 +13,6 @@
     <string name="what_name_sw">Andika jina lako</string>
     <string name="dashboard_find_icons_label">Find Icons</string>
     <string name="dashbord_screenshots_icon_label">Screenshots</string>
+    <string name="title_activity_findicons">Find an icon</string>
 
 </resources>

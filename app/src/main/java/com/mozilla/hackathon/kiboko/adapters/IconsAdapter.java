@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mozilla.hackathon.kiboko.R;
@@ -53,7 +52,6 @@ public class IconsAdapter extends BaseAdapter implements Filterable {
 
     private static class Holder
     {
-        TextView tv;
         ImageView img;
     }
 
@@ -71,13 +69,10 @@ public class IconsAdapter extends BaseAdapter implements Filterable {
         if (convertView == null) {
             // This a new view we inflate the new layout
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            viewItem = inflater.inflate(R.layout.dashboard_grid_item, null);
+            viewItem = inflater.inflate(R.layout.icons_grid_item, null);
             // Now we can fill the layout with the right values
-            TextView nameView = (TextView) viewItem.findViewById(R.id.dashboard_text);
             ImageView imageView = (ImageView) viewItem.findViewById(R.id.dashboard_icon);
 
-
-            holder.tv = nameView;
             holder.img = imageView;
 
             viewItem.setTag(holder);
@@ -86,7 +81,6 @@ public class IconsAdapter extends BaseAdapter implements Filterable {
             holder = (Holder) viewItem.getTag();
 
         final Topic topic = topics.get(position);
-        holder.tv.setText(topic.getName());
         holder.img.setImageResource(topic.getImage());
 
         viewItem.setOnClickListener(new View.OnClickListener() {
